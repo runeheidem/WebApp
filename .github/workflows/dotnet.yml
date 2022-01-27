@@ -78,4 +78,4 @@ jobs:
       - name: Create the package
         run: dotnet pack --configuration Release WebApp
       - name: Publish the package to GPR
-        run: dotnet nuget push WebApp/bin/Release/*.nupkg
+        run: dotnet nuget push WebApp/bin/Release/*.7z
