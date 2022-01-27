@@ -42,7 +42,7 @@ jobs:
           release_name="App-$tag-${{ matrix.target }}"
 
           # Build everything
-          dotnet publish WebApplication1/WeatherAPI.csproj --framework net5.0 --runtime "${{ matrix.target }}" -c Release -o "$release_name"
+          dotnet publish WebApp/WebApp.csproj --framework net5.0 --runtime "${{ matrix.target }}" -c Release -o "$release_name"
 
           # Pack files
           if [ "${{ matrix.target }}" == "win-x64" ]; then
@@ -74,8 +74,8 @@ jobs:
           source-url: https://nuget.pkg.github.com/runeheidem/index.json
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      - run: dotnet build --configuration Release WebApplication1
+      - run: dotnet build --configuration Release WebApp
       - name: Create the package
-        run: dotnet pack --configuration Release WebApplication1
+        run: dotnet pack --configuration Release WebApp
       - name: Publish the package to GPR
-        run: dotnet nuget push WebApplication1/bin/Release/*.nupkg
+        run: dotnet nuget push WebApp/bin/Release/*.nupkg
