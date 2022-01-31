@@ -8,7 +8,11 @@ on:
     types: [published]
 
   # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+    workflow_dispatch:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -41,16 +45,50 @@ jobs:
       - name: Publish WebApp
         run: dotnet publish WebApp/WebApp.csproj --configuration Release --no-restore --output "$GITHUB_WORKSPACE/artifacts/WebApp"
 
+      - name: Install Octopus CLI
+        uses: OctopusDeploy/install-octopus-cli-action@v1.1.8
+        with:
+          version: latest
+      - name: Package WebApp
+        run: |
+          octo pack --id="WebApp" --format="Zip" --version="$PACKAGE_VERSION" --basePath="$GITHUB_WORKSPACE/artifacts/WebApp" --outFolder="$GITHUB_WORKSPACE/artifacts"
+#      - name: Package OctoPetShopDatabase
+#        run: |
+#          octo pack --id="OctoPetShop.Database" --format="Zip" --version="$PACKAGE_VERSION" --basePath="$GITHUB_WORKSPACE/artifacts/OctopusSamples.OctoPetShop.Database" --outFolder="$GITHUB_WORKSPACE/artifacts"
+
+      - name: Push OctoPetShop packages
+        uses: OctopusDeploy/push-package-action@v1.1.1
+        with:
+          api_key: ${{ secrets.OCTOPUSSERVERAPIKEY }}
+          server: ${{ secrets.OCTOPUSSERVERURL }}
+#Fix this line
+          packages: "artifacts/WebApp.${{ env.PACKAGE_VERSION }}.zip"
+          space: ${{ secrets.OCTOPUSSERVER_SPACE }}
+
+      - name: Create and deploy release
+        uses: OctopusDeploy/create-release-action@v1.1.1
+        with:
+          api_key: ${{ secrets.OCTOPUSSERVERAPIKEY }}
+          server: ${{ secrets.OCTOPUSSERVERURL }}
+          space: ${{ secrets.OCTOPUSSERVER_SPACE }}
+          project: "WebApp"
+          deploy_to: "Development"
+          progress: true
+
+
+
+
+
     # Steps represent a sequence of tasks that will be executed as part of the job
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+#      - uses: actions/checkout@v2
 
       # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+#      - name: Run a one-line script
+#        run: echo Hello, world!
 
       # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+#      - name: Run a multi-line script
+#        run: |
+#          echo Add other actions to build,
+#          echo test, and deploy your project.
