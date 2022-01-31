@@ -71,7 +71,7 @@ jobs:
           server: ${{ secrets.OCTOPUSSERVERURL }}
           space: ${{ secrets.OCTOPUSSERVER_SPACE }}
           project: "WebApp"
-          deploy_to: "Development"
+          deploy_to: "Dev"
           progress: true
 
 
