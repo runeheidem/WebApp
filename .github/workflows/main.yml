@@ -56,12 +56,11 @@ jobs:
 #        run: |
 #          octo pack --id="OctoPetShop.Database" --format="Zip" --version="$PACKAGE_VERSION" --basePath="$GITHUB_WORKSPACE/artifacts/OctopusSamples.OctoPetShop.Database" --outFolder="$GITHUB_WORKSPACE/artifacts"
 
-      - name: Push OctoPetShop packages
+      - name: Push WebApp packages
         uses: OctopusDeploy/push-package-action@v1.1.1
         with:
           api_key: ${{ secrets.OCTOPUSSERVERAPIKEY }}
           server: ${{ secrets.OCTOPUSSERVERURL }}
-#Fix this line
           packages: "artifacts/WebApp.${{ env.PACKAGE_VERSION }}.zip"
           space: ${{ secrets.OCTOPUSSERVER_SPACE }}
 
@@ -72,7 +71,7 @@ jobs:
           server: ${{ secrets.OCTOPUSSERVERURL }}
           space: ${{ secrets.OCTOPUSSERVER_SPACE }}
           project: "WebApp"
-          deploy_to: "Development"
+          deploy_to: "Dev"
           progress: true
 
 
