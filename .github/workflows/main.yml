@@ -69,6 +69,7 @@ jobs:
         with:
           api_key: ${{ secrets.OCTOPUSSERVERAPIKEY }}
           server: ${{ secrets.OCTOPUSSERVERURL }}
+          packages: "artifacts/WebApp.${{ env.PACKAGE_VERSION }}.zip"
           space: ${{ secrets.OCTOPUSSERVER_SPACE }}
           project: "WebApp"
           deploy_to: "Dev"
