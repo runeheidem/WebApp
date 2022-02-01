@@ -3,8 +3,8 @@
   <PropertyGroup>
   	<OutputType>exe</OutputType>
   	<TargetFramework>net5.0</TargetFramework>
-  	<PackageId>RHMWebApp</PackageId>
-  	<Version>1.0.12  </Version>
+  	<PackageId>WebApp</PackageId>
+  	<Version>1.0.13</Version>
   	<Authors>rhm</Authors>
   	<Company>rhm</Company>
   	<PackageDescription>This package adds a rhm!</PackageDescription>
