@@ -51,7 +51,7 @@ jobs:
           version: latest
       - name: Package WebApp
         run: |
-          octo pack --id="WebApp" --format="Zip" --version="$PACKAGE_VERSION" --basePath="$GITHUB_WORKSPACE/artifacts/WebApp" --outFolder="$GITHUB_WORKSPACE/artifacts"
+          octo pack --id="WebApp" --format="NuGet" --version="$PACKAGE_VERSION" --basePath="$GITHUB_WORKSPACE/artifacts/WebApp" --outFolder="$GITHUB_WORKSPACE/artifacts"
 #      - name: Package OctoPetShopDatabase
 #        run: |
 #          octo pack --id="OctoPetShop.Database" --format="Zip" --version="$PACKAGE_VERSION" --basePath="$GITHUB_WORKSPACE/artifacts/OctopusSamples.OctoPetShop.Database" --outFolder="$GITHUB_WORKSPACE/artifacts"
@@ -61,7 +61,7 @@ jobs:
         with:
           api_key: ${{ secrets.OCTOPUSSERVERAPIKEY }}
           server: ${{ secrets.OCTOPUSSERVERURL }}
-          packages: "artifacts/WebApp.${{ env.PACKAGE_VERSION }}.zip"
+          packages: "artifacts/WebApp.${{ env.PACKAGE_VERSION }}.nupkg"
           space: ${{ secrets.OCTOPUSSERVER_SPACE }}
 
 
@@ -86,7 +86,7 @@ jobs:
         with:
           api_key: ${{ secrets.OCTOPUSSERVERAPIKEY }}
           server: ${{ secrets.OCTOPUSSERVERURL }}
-          packages: "artifacts/WebApp.${{ env.PACKAGE_VERSION }}.zip"
+          packages: "artifacts/WebApp.${{ env.PACKAGE_VERSION }}.nupkg"
           space: ${{ secrets.OCTOPUSSERVER_SPACE }}
           project: "WebApp"
           deploy_to: "Dev"
