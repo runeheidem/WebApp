@@ -4,7 +4,7 @@
   	<OutputType>exe</OutputType>
   	<TargetFramework>net5.0</TargetFramework>
   	<PackageId>WebApp</PackageId>
-  	<Version>1.0.14</Version>
+  	<Version>1.0.15</Version>
   	<Authors>rhm</Authors>
   	<Company>rhm</Company>
   	<PackageDescription>This package adds a rhm!</PackageDescription>
