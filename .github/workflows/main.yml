@@ -64,6 +64,23 @@ jobs:
           packages: "artifacts/WebApp.${{ env.PACKAGE_VERSION }}.zip"
           space: ${{ secrets.OCTOPUSSERVER_SPACE }}
 
+
+
+      - uses: actions/checkout@v2
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0.x' # SDK Version to use.
+          source-url: https://nuget.pkg.github.com/runeheidem/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - run: dotnet build --configuration Release WebApp
+      - name: Create the package
+        run: dotnet pack --configuration Release WebApp
+      - name: Publish the package to GPR
+        run: dotnet nuget push WebApp/bin/Release/*.nupkg
+        
+        
+
       - name: Create and deploy release
         uses: OctopusDeploy/create-release-action@v1.1.1
         with:
